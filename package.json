@@ -1,0 +1,30 @@
+{
+  "name": "vite-admin-element",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --mode dev",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@types/node": "^20.2.3",
+    "axios": "^1.4.0",
+    "element-plus": "^2.3.5",
+    "less": "^4.1.3",
+    "less-loader": "^11.1.0",
+    "nprogress": "^0.2.0",
+    "pinia": "^2.1.3",
+    "unplugin-auto-import": "^0.16.1",
+    "unplugin-vue-components": "^0.24.1",
+    "vite-plugin-mock": "^2.9.6",
+    "vue": "^3.2.47",
+    "vue-router": "^4.2.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.1.0",
+    "mockjs": "^1.1.0",
+    "vite": "^4.3.2"
+  }
+}
