@@ -5,6 +5,7 @@ const list = [
         id: '0',
         path: '/admin',
         icon: 'Monitor',
+        redirect: '/admin/memu',
         children: [
             {
                 name: '菜单管理',

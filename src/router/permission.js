@@ -29,6 +29,9 @@ router.beforeEach((to, from, next) => {
                     // 获取菜单列表
                     useStore().onGenerateRoutes().then((accessRoutes)=> {
                         // 根据roles权限生成可访问的路由表
+                        if(from.query.redirect){
+                            next({ path: from.query.redirect})
+                        }
                         next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
                     })
                 })
@@ -40,6 +43,7 @@ router.beforeEach((to, from, next) => {
                     })
             } else {
                 //路由、菜单加载ok
+                useStore().onPushRouters(to)
                 next()
             }
         }

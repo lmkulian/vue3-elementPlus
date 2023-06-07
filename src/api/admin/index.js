@@ -29,9 +29,18 @@ const generateRoutes = ()=>{
     })
 }
 
+const passWordChange = (data)=>{
+    return request({
+        url: '/admin/passWordChange',
+        method: 'post',
+        data
+    })
+}
+
 export {
     login,
     getUserInfo,
     loginOut,
-    generateRoutes
+    generateRoutes,
+    passWordChange
 }

@@ -22,6 +22,7 @@
                         v-for="items in item.children"
                         :key="items.id"
                         @click="openItems(items)"
+                        :route="items"
                         :index="items.id">
                         <el-icon>
                             <component :is="items.icon" />
@@ -30,10 +31,18 @@
                     </el-menu-item>
             </el-sub-menu>
         </el-menu>
-        <router-view class="router"></router-view>
+        <div class="right">
+            <user-head></user-head>
+            <router-view v-slot="{ Component }">
+                <keep-alive :max="10">
+                    <component class="router" :is="Component" />
+                </keep-alive>
+            </router-view>
+        </div>
     </div>
 </template>
 <script setup>
+    import userHead from './userHead/index.vue';
     import useStore from '@/store';
     import { storeToRefs } from 'pinia';
     import { useRouter } from 'vue-router';
@@ -54,8 +63,17 @@
     }
 </script>
 <style scoped lang="less">
+.right{
+    flex: 1;
+    width: 100%;
+    background: #f4f4f4;
+}
+.router{
+    padding: 20px;
+}
     :deep(.el-menu){
         height: 100vh;
+        overflow: hidden;
         width: 180px;
     }
 </style>

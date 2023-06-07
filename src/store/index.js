@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { login, getUserInfo, loginOut, generateRoutes } from '@/api/admin'
+import { login, getUserInfo, loginOut, generateRoutes, passWordChange } from '@/api/admin'
 import { ElMessage } from 'element-plus'
 import router from '@/router'
 import assembleRouter from '@/router/getMemuFormat.js'
@@ -9,11 +9,41 @@ export const useStore = defineStore('storeId', {
             userInfo: {
 
             },
-            memu: []
+            memu: [],
+            adminRouters: []
         }
     },
     getters:{},
     actions:{
+        onPushRouters(router, Del = false){
+            return new Promise((resolve,reject)=>{
+                let status = null;
+                // path 为唯一值
+                this.adminRouters.forEach((item,index)=>{
+                    if(item.path === router.path){
+                        status = index;
+                        return;
+                    }
+                })
+                if(Del){
+                    const delRoute = this.adminRouters[status]
+                    this.adminRouters.splice(status, 1)
+                    resolve({
+                        delRoute, 
+                        adminRouters: this.adminRouters
+                    })
+                }else if(!Del && status === null ){
+                    if(this.adminRouters.length >= 10){
+                        // 最大页面栈
+                        // 先删后增
+                        this.adminRouters.splice(0, 1)
+                        this.adminRouters.push(router)
+                        return;
+                    }
+                    this.adminRouters.push(router)
+                }
+            })
+        },
         async onLogOut(){
             await loginOut().then(res=>{
                 if(res.code !== 200){
@@ -65,6 +95,18 @@ export const useStore = defineStore('storeId', {
                     resolve(res.data)
                 })
             }) 
+        },
+        onPassWordChange(value){
+            return new Promise((resolve,reject)=>{
+                passWordChange({pass: value}).then(res=>{
+                    if(res.code !== 200){
+                        ElMessage(res.message);
+                        reject();
+                    }
+                    ElMessage.success(res.message);
+                    resolve(res.data)
+                })
+            })
         }
     }
 })
