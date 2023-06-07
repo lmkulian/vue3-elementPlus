@@ -76,6 +76,7 @@ export const useStore = defineStore('storeId', {
                         reject();
                     }
                     this.userInfo = res.data;
+                    sessionStorage.setItem('roles', res.data.roles);
                     resolve(res.data)
                 })
             }); 

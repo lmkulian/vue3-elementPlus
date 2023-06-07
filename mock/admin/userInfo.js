@@ -11,7 +11,7 @@ export default [
                 data: Mock.mock({
                     'name': "@cname",
                     'userID': Mock.Random.id(),
-                    'roles|3-10': [1,2] 
+                    'roles': ['passWord',2] 
                 })
             }
         }

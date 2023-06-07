@@ -22,7 +22,9 @@
                 />
                 <template #dropdown>
                     <el-dropdown-menu>
-                        <el-dropdown-item @click="update">修改密码</el-dropdown-item>
+                        <div v-permission="'passWord'">
+                            <el-dropdown-item @click="update">修改密码</el-dropdown-item>
+                        </div>
                         <el-dropdown-item @click="loginOut">退出登录</el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
