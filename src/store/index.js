@@ -90,6 +90,7 @@ export const useStore = defineStore('storeId', {
                         reject();
                     }
                     this.memu = res.data;
+                    console.log(res.data)
                     assembleRouter(res.data).forEach(item=>{
                         router.addRoute('layout',item);
                     })

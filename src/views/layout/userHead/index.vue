@@ -37,10 +37,11 @@
         <!-- 历史记录 -->
         <el-tag 
             effect="dark"
-            type="success"
             closable
             hit
             @close="closeTag(item)"
+            @click="onOpen(item)"
+            :style="tagStyle(item)"
             v-for="item in adminRouters"
             :key="item.path">{{ item.name }}</el-tag>
     </div>
@@ -49,7 +50,7 @@
 
 <script setup>
 import { useRoute } from "vue-router";
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import useStore from "@/store";
 import { storeToRefs } from "pinia";
 import { loginOut, updatePassword } from '@/common';
@@ -75,6 +76,16 @@ const update = ()=>{
     updatePassword();
 }
 
+const tagStyle = (item)=>{
+    let status = item.path === route.path
+    let color = status ? '#409eff' : '#fff'
+    let background = status ? '#ecf5ff' : '#409eff'
+    return {
+        color,
+        background
+    }
+}
+
 const closeTag = (item)=>{
     Store.onPushRouters(item, true).then(res=>{
         const { delRoute, adminRouters } = res;
@@ -82,6 +93,12 @@ const closeTag = (item)=>{
             router.push(adminRouters.at(-1).path)
         }
     })
+}
+
+const onOpen = (item)=>{
+    if(item.path !== route.path){
+        router.push(item.path)
+    }
 }
 </script>
 
